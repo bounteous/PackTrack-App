@@ -1,11 +1,11 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Login</ion-title>
+    <ion-title>Signup</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content padding>
-  <h4 text-center margin-top>Insert your credentials</h4>
+  <h4 text-center margin-top>Register your new user</h4>
 
   <ion-item>
     <ion-label stacked>Username</ion-label>
@@ -18,11 +18,11 @@
   </ion-item>
 
   <div text-center margin-top>
-    <button ion-button margin-right (click)="signUp()">
+    <button ion-button color="secondary" (click)="signUp()">
       Register
     </button>
-    <button ion-button color="secondary" (click)="logIn()">
-      Login
+    <button ion-button margin-right (click)="goBack()">
+      Go back
     </button>
   </div>
 

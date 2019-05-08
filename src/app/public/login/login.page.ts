@@ -5,6 +5,9 @@ import { Component, OnInit } from '@angular/core';
 import { DealerService } from '../../providers/public/dealer.service';
 // Models
 import { DealerFront } from '../../models/dealer-front.model';
+import { NavController } from '@ionic/angular';
+// Page
+import { SignupPage } from '../signup/signup.page';
 
 @Component({
   selector: 'app-login',
@@ -16,7 +19,8 @@ export class LoginPage implements OnInit {
 
   constructor(
     private _authenticationService: AuthenticationService,
-    private __dealerService: DealerService
+    private __dealerService: DealerService,
+    public navCtrl: NavController
   ) {
     this.dealer = new DealerFront();
   }
@@ -32,6 +36,10 @@ export class LoginPage implements OnInit {
         console.log('Error login: ', err);
       }
     )
+  }
+
+  signUp() {
+    this.navCtrl.navigateForward('/signup')
   }
 
 }
