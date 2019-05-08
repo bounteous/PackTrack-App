@@ -13,6 +13,7 @@ log.txt
 npm-debug.log*
 
 .idea/
+.tmp/
 .ionic/
 .sourcemaps/
 .sass-cache/
