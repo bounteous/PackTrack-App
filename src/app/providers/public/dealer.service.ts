@@ -25,7 +25,7 @@ export class DealerService {
       .post(this.apiUrl + '/login', dealer);
   }
 
-  public signup(dealer: DealerFront): Observable<DealerBack> {
+  public signup(dealer: DealerFront): Observable<any> {
     return this.httpClient
       .post(this.apiUrl + '/signup', dealer);
   }
