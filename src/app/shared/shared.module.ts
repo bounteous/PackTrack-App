@@ -24,7 +24,7 @@ export class SharedModule {
     const toast = await this.toastController.create({
       message: content.message,
       duration: content.duration || this.defaultDuration,
-      color: 'warning'
+      color: 'danger'
     });
     toast.present();
   }

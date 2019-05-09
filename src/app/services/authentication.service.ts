@@ -33,7 +33,7 @@ export class AuthenticationService {
   }
 
   login(token: string) {
-    return this.storage.set(TOKEN_KEY, token).then(() => {
+    return this.storage.set(TOKEN_KEY, `Bearer ${token}`).then(() => {
       this.authState.next(true);
     })
   }

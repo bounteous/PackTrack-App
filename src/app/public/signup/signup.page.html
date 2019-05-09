@@ -1,29 +1,24 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Signup</ion-title>
+    <ion-title>Register your new user</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content padding>
-  <h4 text-center margin-top>Register your new user</h4>
-
   <ion-item>
-    <ion-label stacked>Username</ion-label>
+    <ion-label position="floating">Username</ion-label>
     <ion-input [(ngModel)]="dealer.username"></ion-input>
   </ion-item>
 
   <ion-item>
-    <ion-label stacked>Password</ion-label>
+    <ion-label position="floating">Password</ion-label>
     <ion-input type="password" [(ngModel)]="dealer.password"></ion-input>
   </ion-item>
 
   <div text-center margin-top>
-    <button ion-button color="secondary" (click)="signUp()">
-      Register
-    </button>
-    <button ion-button margin-right (click)="goBack()">
-      Go back
-    </button>
+    <ion-button expand="block" fill="outline" color="dark" (click)="signUp()">Register</ion-button>
+    <ion-button expand="block" color="light" (click)="goBack()">Go back
+    </ion-button>
   </div>
 
 </ion-content>

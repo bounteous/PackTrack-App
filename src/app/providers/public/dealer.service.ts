@@ -20,7 +20,7 @@ export class DealerService {
     this.apiUrl = environment.server.host + environment.server.port;
   }
 
-  public login(dealer: DealerFront): Observable<DealerBack> {
+  public login(dealer: DealerFront): Observable<any> {
     return this.httpClient
       .post(this.apiUrl + '/login', dealer);
   }
