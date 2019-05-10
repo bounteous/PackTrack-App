@@ -1,6 +1,6 @@
 // Modules
-import { AuthenticationService } from '../../services/authentication.service';
 import { Component, OnInit } from '@angular/core';
+import { AuthenticationService } from '../../services/authentication.service';
 // Services
 import { DealerService } from '../../providers/public/dealer.service';
 // Models
@@ -18,8 +18,8 @@ export class LoginPage implements OnInit {
   public dealer: DealerFront;
 
   constructor(
-    private _authenticationService: AuthenticationService,
     private __dealerService: DealerService,
+    private __authenticationService: AuthenticationService,
     public navCtrl: NavController,
     private __sharedModule: SharedModule
   ) {
@@ -31,12 +31,13 @@ export class LoginPage implements OnInit {
 
   logIn() {
     this.__dealerService.login(this.dealer).subscribe(
-      async res =>  {
+      async res => {
         await this.__sharedModule.simpleOk({
           message: res.msg,
           duration: 4000,
         })
-        this._authenticationService.login(res.access_token);
+        await this.__authenticationService.login(res.access_token)
+        this.navCtrl.navigateRoot('/menu/(menucontent:new-chat)')
       }, async error => {
         await this.__sharedModule.simpleError({
           message: error.error.msg,

@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { MenuPage } from './menu.page';
-import { DashboardPage } from 'src/app/members/dashboard/dashboard.page';
+import { DashboardPage } from '../../members/dashboard/dashboard.page';
+import { NewChatPage } from '../../members/new-chat/new-chat.page';
 
 const routes: Routes = [
   {
@@ -12,13 +13,18 @@ const routes: Routes = [
         path: 'dashboard',
         outlet: 'menucontent',
         component: DashboardPage
+      },
+      {
+        path: 'new-chat',
+        outlet: 'menucontent',
+        component: NewChatPage
       }
     ]
   },
   {
     path: '',
     redirectTo: '/menu/(menucontent:dashboard)'
-  }
+  },
 ]
 
 @NgModule({

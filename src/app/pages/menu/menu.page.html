@@ -9,8 +9,14 @@
     <ion-content>
       <ion-list>
         <ion-menu-toggle auto-hide="false" *ngFor="let page of pages">
-          <ion-item [href]="page.url" [class.active-item]="selectedPath === page.url" routerDirection="forward">
-            <ion-label>{{ page.title }}</ion-label>
+          <ion-item
+            [href]="page.url"
+            [class.active-item]="selectedPath === page.url"
+            routerDirection="forward"
+          >
+            <ion-label>
+              {{ page.title }}
+            </ion-label>
           </ion-item>
         </ion-menu-toggle>
       </ion-list>
@@ -18,5 +24,4 @@
   </ion-menu>
 
   <ion-router-outlet name="menucontent" id="content" main></ion-router-outlet>
-
 </ion-split-pane>
