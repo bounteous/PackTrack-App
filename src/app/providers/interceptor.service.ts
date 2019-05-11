@@ -8,7 +8,7 @@ import {
 import { AlertController } from "@ionic/angular";
 import { Observable, from, throwError } from "rxjs";
 import { catchError, mergeMap } from "rxjs/operators";
-import { Storage } from '@ionic/storage';
+import { Storage } from "@ionic/storage";
 
 @Injectable({
   providedIn: "root"
@@ -28,17 +28,6 @@ export class InterceptorService implements HttpInterceptor {
         let clonedReq = this.addToken(request, token);
         return next.handle(clonedReq).pipe(
           catchError(error => {
-            // Perhaps display an error for specific status codes here already?
-            let msg = error.message;
-
-            // let alert = this.alertCtrl.create({
-            //   title: error.name,
-            //   message: msg,
-            //   buttons: ["OK"]
-            // });
-            // alert.present();
-
-            // Pass the error to the caller of the function
             return throwError(error);
           })
         );

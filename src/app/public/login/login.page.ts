@@ -2,9 +2,9 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from '../../services/authentication.service';
 // Services
-import { DealerService } from '../../providers/public/dealer.service';
+import { UserService } from '../../providers/public/user.service';
 // Models
-import { DealerFront } from '../../models/dealer-front.model';
+import { UserFront } from '../../models/user-front.model';
 import { NavController } from '@ionic/angular';
 // Page
 import { SharedModule } from '../../shared/shared.module';
@@ -15,29 +15,25 @@ import { SharedModule } from '../../shared/shared.module';
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage implements OnInit {
-  public dealer: DealerFront;
+  public user: UserFront;
 
   constructor(
-    private __dealerService: DealerService,
+    private __dealerService: UserService,
     private __authenticationService: AuthenticationService,
     public navCtrl: NavController,
     private __sharedModule: SharedModule
   ) {
-    this.dealer = new DealerFront();
+    this.user = new UserFront();
   }
 
   ngOnInit() {
   }
 
   logIn() {
-    this.__dealerService.login(this.dealer).subscribe(
+    this.__dealerService.login(this.user).subscribe(
       async res => {
-        await this.__sharedModule.simpleOk({
-          message: res.msg,
-          duration: 4000,
-        })
         await this.__authenticationService.login(res.access_token)
-        this.navCtrl.navigateRoot('/menu/(menucontent:new-chat)')
+        this.navCtrl.navigateRoot('/menu/(menucontent:dashboard)')
       }, async error => {
         await this.__sharedModule.simpleError({
           message: error.error.msg,

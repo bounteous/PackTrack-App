@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   server: {
-    host: 'http://localhost:',
+    host: 'http://172.16.80.33:',
     port: 5000
   }
 };

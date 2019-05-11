@@ -1,7 +1,7 @@
 import { Component, OnInit, NgModule } from '@angular/core';
 import { NavController } from '@ionic/angular';
-import { DealerService } from 'src/app/providers/public/dealer.service';
-import { DealerFront } from 'src/app/models/dealer-front.model';
+import { UserService } from 'src/app/providers/public/user.service';
+import { UserFront } from 'src/app/models/user-front.model';
 import { CommonModule } from '@angular/common';
 import { SharedModule } from '../../shared/shared.module';
 
@@ -14,14 +14,14 @@ import { SharedModule } from '../../shared/shared.module';
   imports: [CommonModule, SharedModule]
 })
 export class SignupPage implements OnInit {
-  public dealer: DealerFront;
+  public dealer: UserFront;
 
   constructor(
-    private __dealerService: DealerService,
+    private __dealerService: UserService,
     public navCtrl: NavController,
     public __sharedModule: SharedModule
   ) {
-    this.dealer = new DealerFront();
+    this.dealer = new UserFront();
   }
 
   ngOnInit() {

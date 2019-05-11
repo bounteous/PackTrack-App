@@ -3,10 +3,30 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>new-chat</ion-title>
+    <ion-title>Start new chat</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content padding>
+  <ion-item>
+    <ion-label position="floating">Username</ion-label>
+    <ion-input [(ngModel)]="username"></ion-input>
+  </ion-item>
 
+  <ion-item>
+    <ion-label text-wrap>
+      Insert the name of the user with whom you want to start a new secure chat
+    </ion-label>
+  </ion-item>
+
+  <div text-center margin-top>
+    <ion-button
+      *ngIf="username"
+      expand="block"
+      fill="outline"
+      color="dark"
+      (click)="create()"
+      >Start new chat with {{ username }}</ion-button
+    >
+  </div>
 </ion-content>
