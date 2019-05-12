@@ -8,7 +8,7 @@ import { SharedModule } from "../../shared/shared.module";
   styleUrls: ["./new-chat.page.scss"]
 })
 export class NewChatPage implements OnInit {
-  private username: string;
+  public username: string;
 
   constructor(
     private __chatService: ChatService,
