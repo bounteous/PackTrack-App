@@ -50,4 +50,9 @@ export class SharedModule {
   async getStorage(key: any) {
     return await this.storage.get(key);
   }
+
+  async usernameLogged() {
+    const token_decoded = await this.getStorage("auth-token-decoded");
+    return token_decoded.identity.username;
+  }
 }

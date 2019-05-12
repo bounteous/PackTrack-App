@@ -4,5 +4,6 @@ export class ChatFront {
   creator: string;
   valid: boolean;
   messages: any[];
+  _to: string;
   _id: string;
 }
