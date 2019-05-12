@@ -20,4 +20,8 @@ export class ChatService {
   public create(username: string): Observable<any> {
     return this.httpClient.post(this.apiUrl + "/chat", { username: username });
   }
+
+  public list(): Observable<any> {
+    return this.httpClient.get(this.apiUrl + "/chat");
+  }
 }
