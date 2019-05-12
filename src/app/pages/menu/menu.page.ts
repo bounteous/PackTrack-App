@@ -14,6 +14,10 @@ export class MenuPage implements OnInit {
       url: "/menu/(menucontent:dashboard)"
     },
     {
+      title: "Chats",
+      url: "/menu/(menucontent:list-chats)"
+    },
+    {
       title: "New chat",
       url: "/menu/(menucontent:new-chat)"
     }

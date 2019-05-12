@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { MenuPage } from './menu.page';
 import { DashboardPage } from '../../members/dashboard/dashboard.page';
 import { NewChatPage } from '../../members/new-chat/new-chat.page';
+import { ListChatsPage } from 'src/app/members/list-chats/list-chats.page';
 
 const routes: Routes = [
   {
@@ -13,6 +14,11 @@ const routes: Routes = [
         path: 'dashboard',
         outlet: 'menucontent',
         component: DashboardPage
+      },
+      {
+        path: 'list-chats',
+        outlet: 'menucontent',
+        component: ListChatsPage
       },
       {
         path: 'new-chat',

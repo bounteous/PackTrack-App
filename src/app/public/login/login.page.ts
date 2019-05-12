@@ -15,7 +15,7 @@ import { SharedModule } from '../../shared/shared.module';
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage implements OnInit {
-  public user: UserFront;
+  private user: UserFront;
 
   constructor(
     private __dealerService: UserService,
