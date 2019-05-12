@@ -10,6 +10,7 @@ import { ChatFront } from "../../models/chat-front.model";
 })
 export class ListChatsPage implements OnInit {
   public chats: ChatFront;
+  public chatsResp: Boolean = false;
 
   constructor(
     private __chatService: ChatService,
@@ -26,7 +27,7 @@ export class ListChatsPage implements OnInit {
     this.__chatService.list().subscribe(
       async res => {
         this.chats = res;
-        console.log(this.chats)
+        this.chatsResp = true;
       },
       async error => {
         await this.__sharedModule.simpleError({

@@ -1,3 +1,8 @@
 export class ChatFront {
-    messages: any[];
+  alloweds: any[];
+  created: string;
+  creator: string;
+  valid: boolean;
+  messages: any[];
+  _id: string;
 }
