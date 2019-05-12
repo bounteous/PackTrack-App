@@ -1,35 +1,43 @@
-import { Injectable } from '@angular/core';
-import { Platform } from '@ionic/angular';
-import { Storage } from '@ionic/storage';
+import { Injectable } from "@angular/core";
+import { Platform } from "@ionic/angular";
+import { Storage } from "@ionic/storage";
+import { SharedModule } from "../shared/shared.module";
+import * as JWT from 'jwt-decode';
 
-const TOKEN_KEY = 'auth-token';
+const TOKEN_KEY = "auth-token";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class AuthenticationService {
-
   constructor(
     private storage: Storage,
-    private platform: Platform
+    private platform: Platform,
+    private __sharedModule: SharedModule
   ) {
     // this.platform.ready().then(() => {
     //   this.checkToken();
     // }).catch((err) => {
-
     // })
   }
 
   async checkToken() {
-    return await this.storage.get(TOKEN_KEY)
+    return await this.__sharedModule.getStorage(TOKEN_KEY);
   }
 
   async login(token: string) {
-    return await this.storage.set(TOKEN_KEY, `Bearer ${token}`)
+    await this.setDecodeToken(token);
+    return await this.__sharedModule.setStorage(TOKEN_KEY, `Bearer ${token}`);
+  }
+
+  async setDecodeToken(token) {
+    return await this.__sharedModule.setStorage(
+      `${TOKEN_KEY}-decoded`,
+      JWT(token)
+    );
   }
 
   async logout() {
-    return await this.storage.remove(TOKEN_KEY)
+    return await this.storage.remove(TOKEN_KEY);
   }
-
 }
