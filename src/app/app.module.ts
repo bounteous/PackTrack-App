@@ -9,6 +9,8 @@ import { AppComponent } from "./app.component";
 import { AppRoutingModule } from "./app-routing.module";
 import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { IonicStorageModule } from "@ionic/storage";
+import { AES256 } from "@ionic-native/aes-256/ngx";
+import { Clipboard } from "@ionic-native/clipboard/ngx";
 
 // Services
 import { UserService } from "./providers/public/user.service";
@@ -30,6 +32,8 @@ import { InterceptorService } from "./providers/interceptor.service";
     SplashScreen,
     UserService,
     ChatService,
+    AES256,
+    Clipboard,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     { provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true }
   ],
