@@ -2,7 +2,8 @@ import { Component, OnInit } from "@angular/core";
 import { ChatService } from "../../providers/private/chat.service";
 import { SharedModule } from "../../shared/shared.module";
 import { ChatFront } from "../../models/chat-front.model";
-import { createChangeDetectorRef } from "@angular/core/src/view/refs";
+import { NavController } from "@ionic/angular";
+import { NavigationExtras } from "@angular/router";
 
 @Component({
   selector: "app-list-chats",
@@ -16,7 +17,8 @@ export class ListChatsPage implements OnInit {
 
   constructor(
     private __chatService: ChatService,
-    private __sharedModule: SharedModule
+    private __sharedModule: SharedModule,
+    public navCtrl: NavController
   ) {
     this.chats = new ChatFront();
   }
@@ -30,7 +32,6 @@ export class ListChatsPage implements OnInit {
       async res => {
         this.usernameConnected = await this.__sharedModule.usernameLogged();
         this.chats = this.chatWith(res);
-        console.log(this.usernameConnected);
         this.chatsResp = true;
       },
       async error => {
@@ -40,6 +41,15 @@ export class ListChatsPage implements OnInit {
         });
       }
     );
+  }
+
+  interact(chat_id) {
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+        chat_id: chat_id
+      }
+    };
+    this.navCtrl.navigateForward(["/members/chat"], navigationExtras);
   }
 
   chatWith(chats): ChatFront {

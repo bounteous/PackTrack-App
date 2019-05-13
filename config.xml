@@ -3,7 +3,7 @@
     <name>Paranoid Chat</name>
     <description>Paranoid Chat made with Ionic/Cordova</description>
     <author email="bounteous17@protonmail.com" href="https://thelinuxsect.com/">Paranoid Chat Team</author>
-    <content original-src="index.html" src="http://172.16.80.33:8100" />
+    <content src="index.html" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
