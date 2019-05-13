@@ -3,6 +3,7 @@ import { CommonModule } from "@angular/common";
 import { IonicModule } from "@ionic/angular";
 import { ToastController } from "@ionic/angular";
 import { Storage } from "@ionic/storage";
+import { Clipboard } from "@ionic-native/clipboard/ngx";
 
 @Injectable({
   providedIn: "root"
@@ -13,7 +14,8 @@ export class SharedModule {
 
   constructor(
     public toastController: ToastController,
-    private storage: Storage
+    private storage: Storage,
+    private clipboard: Clipboard
   ) {}
 
   async simpleOk(content) {
@@ -51,8 +53,20 @@ export class SharedModule {
     return await this.storage.get(key);
   }
 
+  async rmStorage(key: any) {
+    return await this.storage.remove(key);
+  }
+
   async usernameLogged() {
     const token_decoded = await this.getStorage("auth-token-decoded");
     return token_decoded.identity.username;
+  }
+
+  async clipboardCopy(_str) {
+    this.clipboard.copy(_str);
+    await this.simpleOk({
+      message: "Secret of the key copied to the clipboard",
+      duration: 5000
+    });
   }
 }
