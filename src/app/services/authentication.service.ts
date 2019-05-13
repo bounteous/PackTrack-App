@@ -2,7 +2,8 @@ import { Injectable } from "@angular/core";
 import { Platform } from "@ionic/angular";
 import { Storage } from "@ionic/storage";
 import { SharedModule } from "../shared/shared.module";
-import * as JWT from 'jwt-decode';
+import * as JWT from "jwt-decode";
+import { Router } from "@angular/router";
 
 const TOKEN_KEY = "auth-token";
 
@@ -13,7 +14,8 @@ export class AuthenticationService {
   constructor(
     private storage: Storage,
     private platform: Platform,
-    private __sharedModule: SharedModule
+    private __sharedModule: SharedModule,
+    private router: Router
   ) {
     // this.platform.ready().then(() => {
     //   this.checkToken();
@@ -37,7 +39,13 @@ export class AuthenticationService {
     );
   }
 
+  async getToken() {
+    return await this.__sharedModule.getStorage(TOKEN_KEY);
+  }
+
   async logout() {
-    return await this.storage.remove(TOKEN_KEY);
+    await this.__sharedModule.rmStorage(TOKEN_KEY);
+    await this.__sharedModule.rmStorage(`${TOKEN_KEY}-decoded`);
+    this.router.navigateByUrl("/login");
   }
 }
