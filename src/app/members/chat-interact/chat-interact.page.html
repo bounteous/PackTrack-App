@@ -1,0 +1,19 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>chat-interact</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="messages">
+  <ion-input
+    [value]="message"
+    (input)="setMessage($event.target.value)"
+    (keyup.enter)="send()"
+    autocapitalize="on"
+    autofocus="true"
+    placeholder="Message"
+  ></ion-input>
+  <ion-item *ngFor="let item of messages">
+    <ion-label>{{item.message}}</ion-label>
+  </ion-item>
+</ion-content>
