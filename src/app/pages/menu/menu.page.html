@@ -14,8 +14,11 @@
             [class.active-item]="selectedPath === page.url"
             routerDirection="forward"
           >
-            <ion-label>
-              {{ page.title }}
+            <ion-label *ngIf="!page.action">
+              <ion-icon [name]="page.icon"></ion-icon> {{ page.title }}
+            </ion-label>
+            <ion-label *ngIf="page.action === 'logout'" (click)="logout()">
+              <ion-icon [name]="page.icon"></ion-icon> {{ page.title }}
             </ion-label>
           </ion-item>
         </ion-menu-toggle>
