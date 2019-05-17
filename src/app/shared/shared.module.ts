@@ -11,6 +11,7 @@ import { Clipboard } from "@ionic-native/clipboard/ngx";
 export class SharedModule {
   private defaultDuration: Number = 4000;
   private route: String = "new-chat"; //'(menucontent:new-chat)';
+  private TOKEN_DEC_KEY: String = "auth-token-decoded";
 
   constructor(
     public toastController: ToastController,
@@ -57,8 +58,12 @@ export class SharedModule {
     return await this.storage.remove(key);
   }
 
-  async usernameLogged() {
-    const token_decoded = await this.getStorage("auth-token-decoded");
+  async getDecodedToken() {
+    return await this.getStorage(this.TOKEN_DEC_KEY);
+  }
+
+  async getUsername() {
+    const token_decoded = await this.getDecodedToken();
     return token_decoded.identity.username;
   }
 
@@ -68,5 +73,10 @@ export class SharedModule {
       message: "Secret of the key copied to the clipboard",
       duration: 5000
     });
+  }
+
+  async getUserId() {
+    let token = await this.getDecodedToken();
+    return token.identity.identity;
   }
 }

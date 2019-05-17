@@ -4,7 +4,22 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content *ngIf="messages">
+<ion-content *ngIf="messages" #content>
+  <div class="_messages-list">
+    <div class="list-group" *ngFor="let item of messages">
+      <a [class]="item.style">
+        <div class="d-flex w-100 justify-content-between">
+          <h5 class="mb-1">{{ item.username }}</h5>
+          <small>3 days ago</small>
+        </div>
+        <p class="mb-1">{{ item.message }}</p>
+        <small>Donec id elit non mi porta.</small>
+      </a>
+    </div>
+  </div>
+</ion-content>
+
+<ion-footer no-border>
   <ion-input
     [value]="message"
     (input)="setMessage($event.target.value)"
@@ -13,7 +28,4 @@
     autofocus="true"
     placeholder="Message"
   ></ion-input>
-  <ion-item *ngFor="let item of messages">
-    <ion-label>{{item.message}}</ion-label>
-  </ion-item>
-</ion-content>
+</ion-footer>

@@ -30,7 +30,7 @@ export class ListChatsPage implements OnInit {
   list() {
     this.__chatService.list().subscribe(
       async res => {
-        this.usernameConnected = await this.__sharedModule.usernameLogged();
+        this.usernameConnected = await this.__sharedModule.getUsername();
         this.chats = this.chatWith(res);
         this.chatsResp = true;
       },
@@ -43,10 +43,11 @@ export class ListChatsPage implements OnInit {
     );
   }
 
-  interact(chat_id) {
+  interact(chat_id, to_username) {
     const navigationExtras: NavigationExtras = {
       queryParams: {
-        chat_id: chat_id
+        chat_id: chat_id,
+        to_username: to_username
       }
     };
     this.navCtrl.navigateForward(["/members/chat"], navigationExtras);

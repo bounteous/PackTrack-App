@@ -11,7 +11,9 @@
   <ion-list *ngFor="let chat of chats">
     <ion-item-sliding>
       <ion-item>
-        <ion-label (click)="interact(chat._id)">{{ chat._to }}</ion-label>
+        <ion-label (click)="interact(chat._id, chat._to)">{{
+          chat._to
+        }}</ion-label>
       </ion-item>
       <ion-item-options side="end">
         <ion-item-option color="danger">Unread</ion-item-option>
