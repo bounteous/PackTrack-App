@@ -34,6 +34,7 @@ export class NewChatPage implements OnInit {
           message: res.msg,
           duration: 2000
         });
+        await this.__chatService.notifyCreated(this.username);
       },
       async error => {
         await this.__sharedModule.simpleError({

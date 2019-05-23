@@ -4,7 +4,8 @@ import { ChatService } from "src/app/providers/private/chat.service";
 import { SharedModule } from "src/app/shared/shared.module";
 import { Keyboard } from "@ionic-native/keyboard/ngx";
 import { MessageFront } from "../../models/message-front.model";
-import { IonContent } from "@ionic/angular";
+import { IonContent, AlertController } from "@ionic/angular";
+import { CryptService } from "../../services/crypt.service";
 
 @Component({
   selector: "app-chat-interact",
@@ -21,13 +22,18 @@ export class ChatInteractPage implements OnInit {
   public userId: string;
   public username: string;
 
-  public toUsername: string;
+  public toUsername: string = "";
+
+  public _decryptKey: string = "";
+  public _cryptKey: string = "";
 
   constructor(
-    private __chatService: ChatService,
     private route: ActivatedRoute,
-    private __sharedModule: SharedModule,
-    private keyboard: Keyboard
+    private keyboard: Keyboard,
+    public alertController: AlertController,
+    private __chatService: ChatService,
+    public __sharedModule: SharedModule,
+    private __cryptService: CryptService
   ) {
     this.messages = [new MessageFront()];
   }
@@ -35,28 +41,32 @@ export class ChatInteractPage implements OnInit {
   async ngOnInit() {
     this.userId = await this.__sharedModule.getUserId();
     this.username = await this.__sharedModule.getUsername();
-    this.route.queryParams.subscribe(params => {
+    this.route.queryParams.subscribe(async params => {
       this.chatId = params.chat_id;
       this.toUsername = params.to_username;
-      this.list();
-      this.scrollBottom();
+    });
+    await this.presentAlertSecretConfirm({
+      msg: "Insert the key for decrypt chat",
+      decrypt: true
     });
   }
 
   scrollBottom() {
     let that = this;
-    setTimeout(()=>{that.content.scrollToBottom();},200); 
+    setTimeout(() => {
+      that.content.scrollToBottom();
+    }, 200);
   }
 
   setMessage(_msg) {
     this.message = _msg;
   }
 
-  list() {
+  async list() {
     this.__chatService.messages(this.chatId).subscribe(
       async res => {
-        this.messages = this.enrichMessages(res);
-        this.keyboard.show();
+        this.messages = await this.enrichMessages(res);
+        // this.scrollBottom();
       },
       async error => {
         await this.__sharedModule.simpleError({
@@ -67,12 +77,16 @@ export class ChatInteractPage implements OnInit {
     );
   }
 
-  send() {
-    this.__chatService.newMessage(this.chatId, this.message).subscribe(
+  async send() {
+    const cryptMsg = await this.__cryptService.encryptMessage(
+      this._cryptKey,
+      this.message
+    );
+    this.__chatService.newMessage(this.chatId, cryptMsg).subscribe(
       async res => {
-        this.messages = this.enrichMessages(res);
-
-        this.keyboard.hide();
+        this.messages = await this.enrichMessages(res);
+        this.message = "";
+        await this.list();
       },
       async error => {
         await this.__sharedModule.simpleError({
@@ -83,20 +97,75 @@ export class ChatInteractPage implements OnInit {
     );
   }
 
-  enrichMessages(messages) {
-    return messages.map(message => {
-      if (message.from === this.userId) {
-        message.style = "bg-white";
-        message.username = this.username;
+  async enrichMessages(messages) {
+    let count = 0;
+    for (const item of messages) {
+      if (item.from === this.userId) {
+        messages[count].style = "bg-white";
+        messages[count].username = this.username;
+        messages[count].message = await this.__cryptService.decryptMessage(
+          this._cryptKey,
+          item.message
+        );
       } else {
-        message.style = "bg-light";
-        message.username = this.toUsername;
+        messages[count].style = "bg-light";
+        messages[count].username = this.toUsername;
+        messages[count].message = await this.__cryptService.decryptMessage(
+          this._decryptKey,
+          item.message
+        );
       }
-      message.style = `${
-        message.style
-      } list-group-item list-group-item-action flex-column align-items-start `;
 
-      return message;
+      messages[count].style = `${
+        messages[count].style
+      } list-group-item list-group-item-action flex-column align-items-start `;
+      count += 1;
+    }
+    return messages;
+  }
+
+  async askCryptKey() {
+    await this.presentAlertSecretConfirm({
+      msg: "Missing crypt key!",
+      decrypt: false
     });
+  }
+
+  async presentAlertSecretConfirm(content) {
+    const alert = await this.alertController.create({
+      header: "Chat secret",
+      subHeader: "AES256 CBC",
+      inputs: [
+        {
+          name: "key",
+          type: "text",
+          placeholder: content.msg
+        }
+      ],
+      buttons: [
+        {
+          text: "Cancel",
+          role: "cancel",
+          cssClass: "secondary",
+          handler: blah => {
+            console.log("Confirm Cancel: blah");
+          }
+        },
+        {
+          text: "Okay",
+          handler: async _data => {
+            if (content.decrypt) {
+              this._decryptKey = _data.key;
+              await this.askCryptKey();
+            } else {
+              this._cryptKey = _data.key;
+              await this.list();
+            }
+          }
+        }
+      ]
+    });
+
+    await alert.present();
   }
 }

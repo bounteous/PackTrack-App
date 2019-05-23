@@ -18,7 +18,23 @@ export class CryptService {
     return await this.aes256.generateSecureIV(_salt); // Returns a 16 bytes string
   }
 
-  async encryptMessage(_msg: string) {}
+  async encryptMessage(_key: string, _msg: string) {
+    const { _salt, _secret } = this.splitSecret(_key);
+    return await this.aes256.encrypt(_secret, _salt, _msg);
+  }
+
+  async decryptMessage(_key: string, _msg: string) {
+    const { _salt, _secret } = this.splitSecret(_key);
+    return await this.aes256.decrypt(_secret, _salt, _msg);
+  }
+
+  splitSecret(_key: string) {
+    const _spl_key = _key.split("-");
+    return {
+      _salt: _spl_key[0],
+      _secret: _spl_key[1]
+    };
+  }
 
   // this.aes256.encrypt(this.secureKey, this.secureIV, 'testdata')
   //   .then(res => console.log('Encrypted Data: ',res))

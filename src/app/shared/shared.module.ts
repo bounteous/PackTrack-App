@@ -54,6 +54,10 @@ export class SharedModule {
     return await this.storage.get(key);
   }
 
+  async getSid() {
+    return await this.storage.get('sid');
+  }
+
   async rmStorage(key: any) {
     return await this.storage.remove(key);
   }
@@ -78,5 +82,9 @@ export class SharedModule {
   async getUserId() {
     let token = await this.getDecodedToken();
     return token.identity.identity;
+  }
+
+  capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
   }
 }

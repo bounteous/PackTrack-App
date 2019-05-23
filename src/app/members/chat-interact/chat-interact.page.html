@@ -1,6 +1,12 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>chat-interact</ion-title>
+    <ion-title>
+      <span class="fa-stack fa-lg">
+        <i class="fa fa-circle fa-stack-2x"></i>
+        <i class="fab fa-jenkins fa-stack-1x fa-inverse"></i>
+      </span>
+      {{ __sharedModule.capitalizeFirstLetter(toUsername) }}</ion-title
+    >
   </ion-toolbar>
 </ion-header>
 
@@ -10,10 +16,8 @@
       <a [class]="item.style">
         <div class="d-flex w-100 justify-content-between">
           <h5 class="mb-1">{{ item.username }}</h5>
-          <small>3 days ago</small>
         </div>
-        <p class="mb-1">{{ item.message }}</p>
-        <small>Donec id elit non mi porta.</small>
+        <p class="mb-2">{{ item.message }}</p>
       </a>
     </div>
   </div>

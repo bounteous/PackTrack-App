@@ -65,4 +65,8 @@ export class ListChatsPage implements OnInit {
     }
     return chats;
   }
+
+  test() {
+    console.log('$$$$$$$$$$$$$$$$')
+  }
 }

@@ -11,7 +11,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { IonicStorageModule } from "@ionic/storage";
 import { AES256 } from "@ionic-native/aes-256/ngx";
 import { Clipboard } from "@ionic-native/clipboard/ngx";
-import { Keyboard } from '@ionic-native/keyboard/ngx';
+import { Keyboard } from "@ionic-native/keyboard/ngx";
 // Services
 import { UserService } from "./providers/public/user.service";
 import { ChatService } from "./providers/private/chat.service";

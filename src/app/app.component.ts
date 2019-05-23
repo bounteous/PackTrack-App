@@ -4,6 +4,7 @@ import { Platform } from "@ionic/angular";
 import { SplashScreen } from "@ionic-native/splash-screen/ngx";
 import { StatusBar } from "@ionic-native/status-bar/ngx";
 import { AuthenticationService } from "./services/authentication.service";
+import { ChatService } from "./providers/private/chat.service";
 
 @Component({
   selector: "app-root",
@@ -15,7 +16,8 @@ export class AppComponent {
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
     private router: Router,
-    private __authenticationService: AuthenticationService
+    private __authenticationService: AuthenticationService,
+    private __chatService: ChatService
   ) {
     this.initializeApp();
   }
@@ -26,6 +28,10 @@ export class AppComponent {
       this.splashScreen.hide();
       if (!(await this.__authenticationService.getToken()))
         this.router.navigateByUrl("/login");
+      this.__chatService.getNotifyCreated().subscribe((message: string) => {
+        debugger
+      });
+      this.__chatService.createSid();
     });
   }
 }

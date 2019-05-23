@@ -9,16 +9,20 @@
 
 <ion-content *ngIf="chatsResp" padding>
   <ion-list *ngFor="let chat of chats">
-    <ion-item-sliding>
-      <ion-item>
-        <ion-label (click)="interact(chat._id, chat._to)">{{
-          chat._to
-        }}</ion-label>
-      </ion-item>
-      <ion-item-options side="end">
-        <ion-item-option color="danger">Unread</ion-item-option>
-        <!-- (click)="unread(item)" -->
-      </ion-item-options>
-    </ion-item-sliding>
+    <ion-item class="_chat">
+      <span class="fa-stack fa-lg _avatar">
+        <i class="fa fa-circle fa-stack-2x"></i>
+        <i class="fab fa-jenkins fa-stack-1x fa-inverse"></i>
+      </span>
+      <ion-label (click)="interact(chat._id, chat._to)">
+        <h2>{{ __sharedModule.capitalizeFirstLetter(chat._to) }}</h2>
+        <p>AES256 CBC</p>
+      </ion-label>
+      <ion-icon
+        name="ios-information-circle-outline"
+        slot="end"
+        (click)="test()"
+      ></ion-icon>
+    </ion-item>
   </ion-list>
 </ion-content>
